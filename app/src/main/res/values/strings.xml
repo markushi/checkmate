@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Checkmate</string>
+    <string name="today">Today</string>
+    <string name="day_instruction_tick">Draw over the tick to mark today as accomplished!</string>
+    <string name="main_menu_settings">Settings</string>
+    <string name="home_tab_today">Today</string>
+    <string name="home_tab_this_month">This Month</string>
+    <string name="home_tab_this_year">This Year</string>
+    <string name="day_instruction_ticked">Nice Job!</string>
+    <string name="goal_details_edit">Edit Goal</string>
+    <string name="settings_goal_header">Goals</string>
+    <string name="goal_detail_goal_name_hint">Name...</string>
+    <string name="navigation_back">Go back</string>
+    <string name="goal_settings_label_name">Name</string>
+    <string name="goal_settings_label_color">Color</string>
+    <string name="goal_settings_button_save">Save</string>
+    <string name="settings_new_goal">Create a new Goal</string>
+    <string name="goal_settings_button_delete">Delete Goal</string>
+    <string name="goal_settings_delete_dialog_title">Delete Goal</string>
+    <string name="goal_settings_delete_dialog_description">Do you really want to delete this goal?</string>
+    <string name="goal_settings_delete_dialog_cancel">Cancel</string>
+    <string name="settings_title">Settings</string>
+    <string name="today_title">Today</string>
+    <string name="onboarding_action_start">Alright, let\'s go!</string>
+    <string name="onboarding_title">CheckMate!</string>
+    <string name="onboarding_subtitle_1">This app helps you build tiny habits and monitor them.</string>
+    <string name="onboarding_subtitle_2">Need some inspiration? Get started by choosing some example goals. You can change and edit your goals at any time in the settings.</string>
+    <string name="onboarding_goal_0">Workout</string>
+    <string name="onboarding_goal_1">Eat Healthy</string>
+    <string name="onboarding_goal_2">Daily Stretching</string>
+    <string name="onboarding_goal_3">Floss</string>
+</resources>
