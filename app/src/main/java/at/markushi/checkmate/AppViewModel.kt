@@ -12,6 +12,7 @@ import at.markushi.checkmate.model.Progress
 import at.markushi.checkmate.model.RepoFactory
 import at.markushi.checkmate.model.dayIdentifier
 import at.markushi.checkmate.ui.AppColors
+import io.sentry.Sentry
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,25 +27,21 @@ import java.util.Locale
 import kotlin.math.roundToInt
 
 sealed class Screen(val name: String) {
-    object Onboarding : Screen("Onboarding")
-    object Today : Screen("Today")
-    object ThisMonth : Screen("ThisMonth")
-    object ThisYear : Screen("ThisYear")
-    object Settings : Screen("Settings")
-    object GoalSettings : Screen("GoalDetail")
-    object Unknown : Screen("Unknown")
+    data object Onboarding : Screen("Onboarding")
+    data object Today : Screen("Today")
+    data object ThisMonth : Screen("ThisMonth")
+    data object ThisYear : Screen("ThisYear")
+    data object Settings : Screen("Settings")
+    data object GoalSettings : Screen("GoalDetail")
+    data object Unknown : Screen("Unknown")
 }
 
 sealed class NavigationAction {
-    object Back : NavigationAction()
+    data object Back : NavigationAction()
     class ToScreen(val screen: Screen, val pushOntoStack: Boolean = false) : NavigationAction()
 }
 
 class AppViewModel : ViewModel() {
-
-    companion object {
-        private const val TAG = "AppViewModel"
-    }
 
     private val repo = RepoFactory.getRepo()
 
@@ -76,11 +73,14 @@ class AppViewModel : ViewModel() {
         }
 
         viewModelScope.launch {
+            val span = Sentry.getSpan()?.startChild("get_goals")
             repo.getGoals().collect { goalList ->
                 goalsFlow.emit(goalList)
 
                 goals.clear()
                 goals.addAll(goalList)
+
+                span?.finish()
 
                 if (currentGoalFlow.value == null) {
                     currentGoalFlow.emit(goalList.firstOrNull())
@@ -232,7 +232,7 @@ class AppViewModel : ViewModel() {
         onGoalSettingsClicked(goal)
     }
 
-    fun onDeleteGoalSettingsClicked(goal: Goal) {
+    fun onDeleteGoalSettingsClicked() {
         settingsGoalShowDeletePrompt.value = true
     }
 
@@ -273,7 +273,7 @@ data class TodayData(
 )
 
 sealed class MonthData {
-    object Empty : MonthData()
+    data object Empty : MonthData()
     class Data(
         val goal: Goal,
         val month: Month,

@@ -56,15 +56,16 @@ class MainActivity : ComponentActivity() {
                         is NavigationAction.Back -> {
                             navController.popBackStack()
                         }
+
                         is NavigationAction.ToScreen -> {
                             if (!action.pushOntoStack) {
                                 navController.clearBackStack(Screen.Today.name)
                             }
                             navController.navigate(
-                                    action.screen.name,
-                                    navOptions {
-                                        launchSingleTop = true
-                                    })
+                                action.screen.name,
+                                navOptions {
+                                    launchSingleTop = true
+                                })
                         }
                     }
                 }
@@ -73,53 +74,54 @@ class MainActivity : ComponentActivity() {
 
             MaterialTheme(colorScheme = AppColors.ColorScheme) {
                 Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     Scaffold(
-                            bottomBar = {
-                                when (currentBackStackEntry.value?.destination?.route) {
-                                    Screen.Today.name, Screen.ThisMonth.name, Screen.Settings.name -> BottomNavigation(
-                                            currentBackStackEntry.value?.destination?.route
-                                    )
-                                    else -> {}
-                                }
-                            },
-                            content = { padding ->
-                                NavHost(
-                                        modifier = Modifier.padding(padding),
-                                        navController = navController,
-                                        startDestination = Screen.Today.name
-                                ) {
-                                    composable(Screen.Onboarding.name) {
-                                        OnboardingScreen { goals ->
-                                            model.onOnboardingStartClicked(goals)
-                                        }
-                                    }
-                                    composable(Screen.Today.name) {
-                                        TodayScreen(model.todayData.value) { date, goalWithState ->
-                                            model.onGoalAtDayChecked(date, goalWithState.goal)
-                                        }
-                                    }
-                                    composable(Screen.ThisMonth.name) {
-                                        MonthScreen(
-                                                model.monthData.value,
-                                                model.goals,
-                                                model::onGoalSelected,
-                                                model::onGoalAtDayChecked
-                                        )
-                                    }
-                                    composable(Screen.Settings.name) {
-                                        SettingsScreen(appViewModel = model)
-                                    }
-                                    composable(Screen.GoalSettings.name) {
-                                        GoalSettingsScreen(appViewModel = model)
-                                    }
-                                    composable(Screen.Unknown.name) {
+                        bottomBar = {
+                            when (currentBackStackEntry.value?.destination?.route) {
+                                Screen.Today.name, Screen.ThisMonth.name, Screen.Settings.name -> BottomNavigation(
+                                    currentBackStackEntry.value?.destination?.route
+                                )
 
+                                else -> {}
+                            }
+                        },
+                        content = { padding ->
+                            NavHost(
+                                modifier = Modifier.padding(padding),
+                                navController = navController,
+                                startDestination = Screen.Today.name
+                            ) {
+                                composable(Screen.Onboarding.name) {
+                                    OnboardingScreen { goals ->
+                                        model.onOnboardingStartClicked(goals)
                                     }
+                                }
+                                composable(Screen.Today.name) {
+                                    TodayScreen(model.todayData.value) { date, goalWithState ->
+                                        model.onGoalAtDayChecked(date, goalWithState.goal)
+                                    }
+                                }
+                                composable(Screen.ThisMonth.name) {
+                                    MonthScreen(
+                                        model.monthData.value,
+                                        model.goals,
+                                        model::onGoalSelected,
+                                        model::onGoalAtDayChecked
+                                    )
+                                }
+                                composable(Screen.Settings.name) {
+                                    SettingsScreen(appViewModel = model)
+                                }
+                                composable(Screen.GoalSettings.name) {
+                                    GoalSettingsScreen(appViewModel = model)
+                                }
+                                composable(Screen.Unknown.name) {
+
                                 }
                             }
+                        }
                     )
                 }
             }
@@ -130,33 +132,33 @@ class MainActivity : ComponentActivity() {
     @Composable
     private fun BottomNavigation(currentRoute: String?) {
         Column(
-                modifier = Modifier
-                        .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp))
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp))
         ) {
             Row(
-                    modifier = Modifier
-                            .height(64.dp)
-                            .padding(horizontal = 16.dp)
-                            .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier
+                    .height(64.dp)
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 BottomAppBarButton(
-                        title = stringResource(R.string.home_tab_today),
-                        active = currentRoute == Screen.Today.name
+                    title = stringResource(R.string.home_tab_today),
+                    active = currentRoute == Screen.Today.name
                 ) {
                     model.onTodayClicked()
                 }
                 BottomAppBarButton(
-                        title = stringResource(R.string.home_tab_this_month),
-                        active = currentRoute == Screen.ThisMonth.name
+                    title = stringResource(R.string.home_tab_this_month),
+                    active = currentRoute == Screen.ThisMonth.name
                 ) {
                     model.onThisMonthClicked()
                 }
                 Spacer(modifier = Modifier.weight(1.0f))
                 BottomAppBarButton(
-                        icon = Icons.Outlined.Settings,
-                        active = currentRoute == Screen.Settings.name
+                    icon = Icons.Outlined.Settings,
+                    active = currentRoute == Screen.Settings.name
                 ) {
                     model.onSettingsClicked()
                 }

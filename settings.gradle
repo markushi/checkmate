@@ -3,7 +3,17 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        mavenLocal()
+    }
+    pluginManagement {
+        repositories {
+            gradlePluginPortal()
+            google()
+            mavenCentral()
+            mavenLocal()
+        }
     }
 }
+
 rootProject.name = "checkmate"
 include ':app'

@@ -96,7 +96,7 @@ fun GoalSettingsScreen(appViewModel: AppViewModel) {
                     if (appViewModel.settingsGoalShowDeleteOption.value) {
                         DangerousButton(
                             onClick = {
-                                appViewModel.onDeleteGoalSettingsClicked(goal)
+                                appViewModel.onDeleteGoalSettingsClicked()
                             }) {
                             Text(text = stringResource(R.string.goal_settings_button_delete))
                         }

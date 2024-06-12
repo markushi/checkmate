@@ -101,16 +101,16 @@ interface ProgressDao {
     suspend fun insertGoal(goal: Goal): Long
 
     @Delete
-    suspend fun deleteProgress(progress: Progress)
+    suspend fun deleteProgress(progress: Progress): Void
 
     @Update
-    fun updateProgress(progress: Progress)
+    fun updateProgress(progress: Progress): Void
 
     @Delete
-    suspend fun deleteGoal(goal: Goal)
+    suspend fun deleteGoal(goal: Goal): Void
 
     @Update
-    suspend fun updateGoal(goal: Goal)
+    suspend fun updateGoal(goal: Goal): Void
 
     @Query("DELETE FROM Progress WHERE identifier = :identifier")
     suspend fun deleteProgressByIdentifier(identifier: Int): Int

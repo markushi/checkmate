@@ -10,6 +10,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.App">
 
+        <meta-data
+            android:name="io.sentry.dsn"
+            android:value="" />
+
+        <meta-data
+            android:name="io.sentry.traces.user-interaction.enable"
+            android:value="true" />
+        <meta-data
+            android:name="io.sentry.traces.sample-rate"
+            android:value="1.0" />
+        <meta-data
+            android:name="io.sentry.traces.profiling.sample-rate"
+            android:value="1.0" />
+
         <activity
             android:name="at.markushi.checkmate.MainActivity"
             android:exported="true"

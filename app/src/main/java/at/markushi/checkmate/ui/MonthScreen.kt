@@ -28,7 +28,6 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.text.font.FontWeight
@@ -191,7 +190,7 @@ private fun MonthLayout(
                 val x1 = streak.end.columnIdx
 
                 if (startRow == endRow) {
-                    drawRoundRectWithStroke(
+                    drawRoundRect(
                         activeColor,
                         Offset(
                             outerPadding + itemPadding + (childSize * x0),
@@ -205,7 +204,7 @@ private fun MonthLayout(
                     )
                 } else {
                     // start
-                    drawRoundRectWithStroke(
+                    drawRoundRect(
                         activeColor,
                         Offset(
                             outerPadding + itemPadding + (childSize * x0),
@@ -220,7 +219,7 @@ private fun MonthLayout(
 
                     // middle
                     for (i in startRow + 1 until endRow) {
-                        drawRoundRectWithStroke(
+                        drawRoundRect(
                             activeColor,
                             Offset(0f, outerPadding + itemPadding + (childSize * i)),
                             Size(size.width, innerChildHeight)
@@ -228,7 +227,7 @@ private fun MonthLayout(
                     }
 
                     // end
-                    drawRoundRectWithStroke(
+                    drawRoundRect(
                         activeColor,
                         Offset(
                             -childSize,
@@ -279,16 +278,11 @@ private fun DayOfMonth(
     val borderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f)
     val todayColor = MaterialTheme.colorScheme.primary
 
-    var m = modifier
-        .fillMaxWidth()
-        .aspectRatio(1f, false)
-        .padding(4.dp)
-
-    if (!day.checkedIn) {
-        // m = m.border(2.dp, borderColor, CircleShape)
-    }
     Box(
-        modifier = m
+        modifier = modifier
+            .fillMaxWidth()
+            .aspectRatio(1f, false)
+            .padding(4.dp)
             .clip(CircleShape)
             .clickable {
                 onDayClick(day.date)
@@ -314,15 +308,3 @@ private fun DayOfMonth(
 
     }
 }
-
-fun DrawScope.drawRoundRectWithStroke(
-    color: Color,
-    topLeft: Offset,
-    size: Size,
-    cornerRadius: CornerRadius = CornerRadius.Zero,
-) {
-    drawRoundRect(
-        color, topLeft, size, cornerRadius
-    )
-}
-
